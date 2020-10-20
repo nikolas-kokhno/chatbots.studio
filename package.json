@@ -5,13 +5,16 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "mongoose": "^5.10.9",
     "nodemon": "^2.0.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.1",
-    "@babel/preset-env": "^7.12.1"
+    "@babel/preset-env": "^7.12.1",
+    "eslint": "^7.11.0"
   },
   "scripts": {
     "start": "nodemon --exec babel-node src/app.js"
