@@ -1,14 +1,14 @@
-import { ProductModel } from '../models/ProductModel';
 import { validationResult } from 'express-validator';
+import { CategoryModel } from '../models/CategoryModel';
 
-class ProductController {
+class CategoryController {
     async getAll(req, res) {
         try {
-            let product = await ProductModel.find({}).exec();
+            let category = await CategoryModel.find({}).exec();
 
             res.status(200).json({
                 status: 'success',
-                data: product
+                data: category
             });
         } catch (error) {
             res.status(500).json({
@@ -20,12 +20,12 @@ class ProductController {
 
     async getByID(req, res) {
         try {
-            let productID = req.params.id;
-            let product = await ProductModel.findById({ _id: productID }).exec();
-
+            let categoryID = req.params.id;
+            let category = await CategoryModel.findById({ _id: categoryID });
+            
             res.status(200).json({
                 status: 'success',
-                data: product
+                data: category
             });
         } catch (error) {
             res.status(500).json({
@@ -39,12 +39,7 @@ class ProductController {
         try {
             let errors = validationResult(req);
             let data = {
-                name: req.body.name,
-                price: req.body.price,
-                category: req.body.category,
-                postmaster: req.body.postmaster,
-                shelfLife: req.body.shelfLife,
-                quantity: req.body.quantity
+                name: req.body.name
             }
 
             if (!errors.isEmpty()) {
@@ -55,11 +50,11 @@ class ProductController {
                 return;
             }
 
-            let product = await ProductModel.create(data);
+            let category = await CategoryModel.create(data);
 
             res.status(200).json({
                 status: 'success',
-                data: product
+                data: category
             });
         } catch (error) {
             res.status(500).json({
@@ -72,14 +67,9 @@ class ProductController {
     async update(req, res) {
         try {
             let errors = validationResult(req);
-            let productID = req.params.id;
+            let categoryID = req.params.id;
             let data = {
-                name: req.body.name,
-                price: req.body.price,
-                category: req.body.category,
-                postmaster: req.body.postmaster,
-                shelfLife: req.body.shelfLife,
-                quantity: req.body.quantity
+                name: req.body.name
             }
 
             if (!errors.isEmpty()) {
@@ -90,11 +80,11 @@ class ProductController {
                 return;
             }
 
-            await ProductModel.updateOne({_id: productID}, data);
+            await CategoryModel.updateOne({ _id: categoryID }, data);
 
             res.status(200).json({
                 status: 'success',
-                message: `Product with ${productID} ID updated successfully.`
+                message: `Category with ${categoryID} ID updated successfully.`
             });
         } catch (error) {
             res.status(500).json({
@@ -106,13 +96,13 @@ class ProductController {
 
     async delete(req, res) {
         try {
-            let productID = req.params.id;
+            let categoryID = req.params.id;
 
-            await ProductModel.deleteOne({ _id: productID });
-
+            await CategoryModel.deleteOne({ _id: categoryID });
+            
             res.status(200).json({
                 status: 'success',
-                message: `Product with ${productID} ID deleted successfully.`
+                message: `Category with ${categoryID} ID deleted successfully.`
             });
         } catch (error) {
             res.status(500).json({
@@ -123,4 +113,4 @@ class ProductController {
     }
 }
 
-export const ProductCtrl = new ProductController();
+export const CategoryCtrl = new CategoryController();
