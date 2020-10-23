@@ -23,6 +23,14 @@ class ProductController {
             let productID = req.params.id;
             let product = await ProductModel.findById({ _id: productID }).exec();
 
+            if(!product) {
+                res.status(404).json({
+                    status: 'error',
+                    message: 'Product not found!'
+                });
+                return;
+            }
+
             res.status(200).json({
                 status: 'success',
                 data: product
@@ -73,6 +81,17 @@ class ProductController {
         try {
             let errors = validationResult(req);
             let productID = req.params.id;
+
+            let product = await ProductModel.findById({ _id: productID }).exec();
+
+            if(!product) {
+                res.status(404).json({
+                    status: 'success',
+                    message: 'Product not found!'
+                });
+                return;
+            }
+
             let data = {
                 name: req.body.name,
                 price: req.body.price,
@@ -107,6 +126,15 @@ class ProductController {
     async delete(req, res) {
         try {
             let productID = req.params.id;
+            let product = await ProductModel.findById({ _id: productID }).exec();
+
+            if(!product) {
+                res.status(404).json({
+                    status: 'error',
+                    message: 'Product not found!'
+                });
+                return;
+            }
 
             await ProductModel.deleteOne({ _id: productID });
 
@@ -123,4 +151,5 @@ class ProductController {
     }
 }
 
-export const ProductCtrl = new ProductController();
+const ProductCtrl = new ProductController();
+export default ProductCtrl;

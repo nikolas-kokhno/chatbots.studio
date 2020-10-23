@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 
-export const categoryValidator = [
+const categoryValidator = [
     body('name', 'Please enter product name')
         .isString().withMessage('Product name can only be a string.')
         .isLength({
@@ -8,3 +8,5 @@ export const categoryValidator = [
             max: 80
         }).withMessage('The product name must contain at least 2 and no more than 80 characters.')
 ];
+
+export default categoryValidator;

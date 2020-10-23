@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 
-export const productValidator = [
+const productValidator = [
     body('name', 'Please enter product name')
         .isString().withMessage('Product name can only be a string.')
         .isLength({
@@ -43,3 +43,5 @@ export const productValidator = [
         max: 9999
     }).withMessage('The quantity must not be less than 0 or exceed 9999.'),
 ];
+
+export default productValidator;

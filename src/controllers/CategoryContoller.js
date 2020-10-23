@@ -22,6 +22,14 @@ class CategoryController {
         try {
             let categoryID = req.params.id;
             let category = await CategoryModel.findById({ _id: categoryID });
+
+            if(!category) {
+                res.status(404).json({
+                    status: 'success',
+                    message: 'Category not found!'
+                });
+                return;
+            }
             
             res.status(200).json({
                 status: 'success',
@@ -68,6 +76,17 @@ class CategoryController {
         try {
             let errors = validationResult(req);
             let categoryID = req.params.id;
+
+            let category = await CategoryModel.findById({ _id: categoryID });
+
+            if(!category) {
+                res.status(404).json({
+                    status: 'success',
+                    message: 'User not found!'
+                });
+                return;
+            }
+
             let data = {
                 name: req.body.name
             }
@@ -98,6 +117,16 @@ class CategoryController {
         try {
             let categoryID = req.params.id;
 
+            let category = await CategoryModel.findById({ _id: categoryID });
+
+            if(!category) {
+                res.status(404).json({
+                    status: 'success',
+                    message: 'User not found!'
+                });
+                return;
+            }
+
             await CategoryModel.deleteOne({ _id: categoryID });
             
             res.status(200).json({
@@ -113,4 +142,5 @@ class CategoryController {
     }
 }
 
-export const CategoryCtrl = new CategoryController();
+const CategoryCtrl = new CategoryController();
+export default CategoryCtrl;

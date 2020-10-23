@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config({ path: 'src/config/.env' });
 
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://127.0.0.1:27017/chatbotstudio', {
+mongoose.connect(`mongodb://${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
